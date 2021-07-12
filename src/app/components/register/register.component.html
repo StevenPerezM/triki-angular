@@ -1,0 +1,92 @@
+<div class="flex h-screen justify-center items-center">
+  <div class="max-w-md py-4 px-8 bg-white shadow-lg rounded-lg md:w-full lg:w-5/12">
+    <h1 class="text-gray-800 text-3xl font-bold">Triki Game</h1>
+    <hr class="mb-4 mt-2"/>
+    <form
+      #formularioCrear="ngForm"
+      (ngSubmit)="formularioCrear.form.valid && onSubmit('player1')"
+      novalidate
+    >
+      <h2 class="mt-2 font-semibold text-gray-600">Usuario jugador 01:</h2>
+      <div class="flex items-center border-b border-teal-500 py-2">
+        <input [(ngModel)]="player1.namePlayer" required minlength="3" name="name1" #username1="ngModel" [disabled]="!isEmpty(player1)"
+               class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+               type="text" placeholder="Jugador 1" aria-label="Full name">
+
+        <button (click)="setAcion('search')" [hidden]="!isEmpty(player1)"
+                class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-2 text-white py-1 px-2 rounded-full"
+                type="submit">
+          <fa-icon [icon]="faSearch"></fa-icon>
+        </button>
+        <button (click)="setAcion('add')" [hidden]="!isEmpty(player1)"
+                class="flex-shrink-0 bg-blue-300 hover:bg-blue-500 border-blue-300 hover:border-blue-500 text-sm border-2 text-white py-1 px-2 rounded-full ml-1"
+                type="submit">
+          <fa-icon [icon]="faPlus"></fa-icon>
+        </button>
+        <button (click)="resetPlayer('player1')" [hidden]="isEmpty(player1)"
+                class="flex-shrink-0 bg-red-400 hover:bg-red-500 border-red-400 hover:border-red-500 text-sm border-2 text-white py-1 px-2 rounded-full ml-1"
+                type="button">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </button>
+      </div>
+      <div *ngIf="username1.invalid">
+        <span *ngIf="username1.errors?.required"
+          class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+          El usuario no puede ser vacío
+        </span>
+        <span *ngIf="username1.errors?.minlength"
+              class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+          El usuario debe contener al menos 3 caracteres
+        </span>
+      </div>
+    </form>
+    <ngx-spinner></ngx-spinner>
+    <form [hidden]="isEmpty(player1)"
+      #formularioCrear2="ngForm"
+      (ngSubmit)="formularioCrear2.form.valid && onSubmit('player2')"
+      novalidate
+    >
+      <h2 class="mt-2 font-semibold text-gray-600">Usuario jugador 02:</h2>
+      <div class="flex items-center border-b border-teal-500 py-2">
+        <input [(ngModel)]="player2.namePlayer" required minlength="3" name="name2" #username2="ngModel" [disabled]="!isEmpty(player2)"
+               class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+               type="text" placeholder="Jugador 2" aria-label="Full name">
+
+        <button (click)="setAcion('search')" [hidden]="!isEmpty(player2)"
+                class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-2 text-white py-1 px-2 rounded-full"
+                type="submit">
+          <fa-icon [icon]="faSearch"></fa-icon>
+        </button>
+        <button (click)="setAcion('add')" [hidden]="!isEmpty(player2)"
+                class="flex-shrink-0 bg-blue-300 hover:bg-blue-500 border-blue-300 hover:border-blue-500 text-sm border-2 text-white py-1 px-2 rounded-full ml-1"
+                type="submit">
+          <fa-icon [icon]="faPlus"></fa-icon>
+        </button>
+        <button (click)="resetPlayer('player2')" [hidden]="isEmpty(player2)"
+                class="flex-shrink-0 bg-red-400 hover:bg-red-500 border-red-400 hover:border-red-500 text-sm border-2 text-white py-1 px-2 rounded-full ml-1"
+                type="button">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </button>
+
+      </div>
+      <div *ngIf="username2.invalid">
+        <span *ngIf="username2.errors?.required"
+              class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+          El usuario no puede ser vacío
+        </span>
+        <span *ngIf="username2.errors?.minlength"
+              class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+          El usuario debe contener al menos 3 caracteres
+        </span>
+      </div>
+
+    </form>
+
+    <div class="flex justify-start mt-4">
+      <button (click)="createGame()" [hidden]="isEmpty(player1)||isEmpty(player2)"
+         class="cursor-pointer flex-no-shrink bg-indigo-500 hover:bg-indigo-600 px-5 py-2 text-sm shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-indigo-400 hover:border-indigo-600 text-white rounded-full transition ease-in duration-300">
+        Empezar
+      </button>
+    </div>
+  </div>
+</div>
