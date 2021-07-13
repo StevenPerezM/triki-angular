@@ -7,7 +7,8 @@ import {MoveReq} from "../../models/move-req";
 import Swal from "sweetalert2";
 import {GameReq} from "../../models/game-req";
 import {User} from "../../models/user";
-import { NgxSpinnerService } from "ngx-spinner";
+import {NgxSpinnerService} from "ngx-spinner";
+import {GameState} from "../../enums/game-state";
 
 @Component({
   selector: 'app-board',
@@ -44,7 +45,6 @@ export class BoardComponent implements OnInit {
           .subscribe(
             (response) => {
               this.game = response;
-              console.log(this.game);
             },
             (err) => {
               console.log(err.message);
@@ -76,7 +76,7 @@ export class BoardComponent implements OnInit {
     this.serviceGame.move(moveReq)
       .subscribe((response) => {
           this.game = response;
-          if (this.game.status == "GAMEOVER") {
+          if (this.game.status == GameState.GameOver) {
             let winner = this.game.winner == "player1" ? this.game["player1"].namePlayer : this.game["player2"].namePlayer;
             this.mensajeOk(`El jugador ${winner} ha ganado`);
           }
@@ -106,7 +106,11 @@ export class BoardComponent implements OnInit {
   }
 
   public isGameFinished(): boolean {
-    return this.game == null || this.game.status == "GAMEOVER";
+    return this.game == null || this.game.status != GameState.Playing;
+  }
+
+  public isGameFinishedAndExist(): boolean {
+    return this.game != null && this.game.status != GameState.Playing;
   }
 
   public mensajeOk(value: string): void {

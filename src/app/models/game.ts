@@ -1,16 +1,17 @@
 import {Player} from "./player";
+import {GameState} from "../enums/game-state"
 
-export class Game{
+export class Game {
   public id: string;
   public startDate: Date;
   public turn: string;
-  public status: string;
+  public status: GameState;
   public player1: Player;
   public player2: Player;
   public dataCurrentMovements: string[][];
   public winner: string;
 
-  constructor(id: string, startDate: Date, turn: string, status: string, player1: Player, player2: Player, dataCurrentMovements: string[][], winner: string) {
+  constructor(id: string, startDate: Date, turn: string, status: GameState, player1: Player, player2: Player, dataCurrentMovements: string[][], winner: string) {
     this.id = id;
     this.startDate = startDate;
     this.turn = turn;

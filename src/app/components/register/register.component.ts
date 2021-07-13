@@ -7,7 +7,7 @@ import {GameService} from "../../services/game.service";
 import {GameReq} from "../../models/game-req";
 import {Router} from "@angular/router";
 import {UserReq} from "../../models/user-req";
-import { NgxSpinnerService } from "ngx-spinner";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-register',
@@ -30,10 +30,11 @@ export class RegisterComponent implements OnInit {
     this.player2 = new User('', '');
     this.action = "";
   }
+
   ngOnInit(): void {
   }
 
-   public onSubmit(player: string) {
+  public onSubmit(player: string) {
     this.spinner.show().then(r => r);
     if (this.action == "add") {
       player == "player1" ? this.savePlayer1() : this.savePlayer2();
@@ -71,7 +72,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public savePlayer1(): void {
-    let playerReq : UserReq = new UserReq(this.player1.namePlayer);
+    let playerReq: UserReq = new UserReq(this.player1.namePlayer);
     this.serviceUser.createUser(playerReq)
       .subscribe((response) => {
           this.mensajeOk(`El jugador ${response.namePlayer} has sido creado.`);
@@ -88,7 +89,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public savePlayer2(): void {
-    let playerReq : UserReq = new UserReq(this.player2.namePlayer);
+    let playerReq: UserReq = new UserReq(this.player2.namePlayer);
     this.serviceUser.createUser(playerReq)
       .subscribe((response) => {
           this.mensajeOk(`El jugador ${response.namePlayer} has sido creado.`);
@@ -104,10 +105,12 @@ export class RegisterComponent implements OnInit {
       );
   }
 
-  public createGame(): void{
+  public createGame(): void {
+    this.spinner.show().then(r => r);
     let req: GameReq = new GameReq(this.player1, this.player2);
     this.serviceGame.createGame(req)
       .subscribe((response) => {
+          this.spinner.hide().then(r => r);
           this.router.navigate(['/game', response.id]).then(r => r)
         },
         (err) => {
