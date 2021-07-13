@@ -78,7 +78,9 @@ export class BoardComponent implements OnInit {
           this.game = response;
           if (this.game.status == GameState.GameOver) {
             let winner = this.game.winner == "player1" ? this.game["player1"].namePlayer : this.game["player2"].namePlayer;
-            this.mensajeOk(`El jugador ${winner} ha ganado`);
+            this.mensajeInfo(`${winner} ha ganado!!`);
+          }else if(this.game.status == GameState.TieldGame){
+            this.mensajeInfo(`Es un empate, intentalo nuevamente`);
           }
         },
         (err) => {
@@ -117,8 +119,12 @@ export class BoardComponent implements OnInit {
     Swal.fire('Éxito', value, 'success').then(r => r);
   }
 
+  public mensajeInfo(value: string): void {
+    Swal.fire('', value, 'info').then(r => r);
+  }
+
   public mensajeError(value: string): void {
-    Swal.fire(value, 'Error', 'error').then(r => r);
+    Swal.fire("Error", value, 'error').then(r => r);
   }
 
 }
